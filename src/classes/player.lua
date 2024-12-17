@@ -5,11 +5,13 @@ Player = {
     }
 
     obj.draw = function()
-      local i = 0
-      for button, state in pairs(obj.button_states) do
-        print(button .. " - " .. (state and "t" or "f"), 0, i)
-        i += 10
-      end
+      -- local i = 0
+      -- for button, state in pairs(obj.button_states) do
+      --   print(button .. " - " .. (state and "t" or "f"), 0, i)
+      --   i += 10
+      -- end
+
+      print(metronome.frame_type, 0, 0)
     end
 
     obj.update = function()

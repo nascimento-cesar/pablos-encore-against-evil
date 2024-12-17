@@ -1,8 +1,11 @@
 Track = {
-  new = function()
+  new = function(notes)
     local obj = {
-      notes = {}
+      notes = notes
     }
+
+    obj.update = function()
+    end
 
     return obj
   end

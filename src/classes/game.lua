@@ -1,24 +1,15 @@
 Game = {
   new = function()
     local obj = {
-      beat = 0,
-      current_track = nil,
-      tempo = 30
+      track = nil
     }
 
-    obj.draw = function()
-    end
-
-    obj.metronome = function()
-      obj.beat += 1
-
-      if (obj.beat % obj.tempo == 0) then
-        sfx(0)
-      end
-    end
-
     obj.update = function()
-      obj.metronome()
+      if not obj.track then
+        obj.track = Track.new()
+      end
+
+      obj.track.update()
     end
 
     return obj
