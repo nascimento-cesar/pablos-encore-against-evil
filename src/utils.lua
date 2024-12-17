@@ -1,3 +1,13 @@
+function get_button_id(button)
+  return ({
+    ["❎"] = 4,
+    ["🅾️"] = 5,
+    ["⬅️"] = 0,
+    ["⬇️"] = 3,
+    ["➡️"] = 1
+  })[button]
+end
+
 function get_pitch_id(pitch)
   return ({
     ["C0"] = 0,
