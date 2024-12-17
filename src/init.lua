@@ -1,5 +1,4 @@
 function _init()
+  debug = ""
   game = Game.new()
-  metronome = Metronome.new()
-  player = Player.new()
 end

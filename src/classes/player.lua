@@ -1,17 +1,18 @@
 Player = {
   new = function()
     local obj = {
-      button_states = {}
+      button_states = {},
+      combo = 0,
+      multiplier = 1,
+      score = 0
     }
 
     obj.draw = function()
-      -- local i = 0
-      -- for button, state in pairs(obj.button_states) do
-      --   print(button .. " - " .. (state and "t" or "f"), 0, i)
-      --   i += 10
-      -- end
+    end
 
-      print(metronome.frame_type, 0, 0)
+    obj.score_up = function(frame_type)
+      obj.score += (frame_type == "perfect" and 20 or 10) * obj.multiplier
+      obj.combo += 1
     end
 
     obj.update = function()
