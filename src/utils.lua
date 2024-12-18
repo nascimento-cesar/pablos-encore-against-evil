@@ -77,6 +77,36 @@ function get_pitch_id(pitch)
   })[pitch]
 end
 
-function get_track(track_name)
-  return { bpm = 64 }
+function get_song_data(song_name)
+  local song = ({
+    canon_rock = {
+      bpm = 64,
+      raw_tracks = {
+        "B1,0,5,0,1/2+B1,0,5,0,1/2|B1,0,5,0,1/2+B1,0,5,0,1/2",
+        "B1,0,5,0,1/2+B1,0,5,0,1/2|B1,0,5,0,1/2+B1,0,5,0,1/2"
+      }
+    }
+  })[song_name]
+
+  song.tracks = {}
+
+  for track in all(song.raw_tracks) do
+    local parsed_chords = {}
+    local chords = split(track, "|")
+
+    for c = 1, #chords do
+      local parsed_chord = {}
+      local notes = split(chords[c], "+")
+
+      for n = 1, #notes do
+        add(parsed_chord, split(notes[n]))
+      end
+
+      add(parsed_chords, parsed_chord)
+    end
+
+    add(song.tracks, parsed_chords)
+  end
+
+  return song
 end
