@@ -1,4 +1,15 @@
-function get_button_id(button)
+function get_song_tracks(song_name)
+  return ({
+    canon_rock = {
+      "F1,1/2,0,5,0|P,1/2,0,5,0|A1,1/2,0,5,0|B1,1/2,0,5,0",
+      "F1,1/2,0,5,0|P,1/2,0,5,0|A1,1/2,0,5,0|B1,1/2,0,5,0",
+      "F1,1/2,0,5,0|P,1/2,0,5,0|A1,1/2,0,5,0|B1,1/2,0,5,0",
+      "F1,1/2,0,5,0|P,1/2,0,5,0|A1,1/2,0,5,0|B1,1/2,0,5,0"
+    }
+  })[song_name]
+end
+
+function parse_button_icon(button)
   return ({
     ["❎"] = 4,
     ["🅾️"] = 5,
@@ -8,8 +19,19 @@ function get_button_id(button)
   })[button]
 end
 
-function get_pitch_id(pitch)
+function parse_duration(duration)
   return ({
+    ["1"] = 1,
+    ["1/2"] = 1 / 2,
+    ["1/4"] = 1 / 4,
+    ["1/8"] = 1 / 8,
+    ["1/16"] = 1 / 16
+  })[tostr(duration)]
+end
+
+function parse_pitch(pitch)
+  return ({
+    ["P"] = -1,
     ["C0"] = 0,
     ["C#0"] = 1,
     ["D0"] = 2,
@@ -75,38 +97,4 @@ function get_pitch_id(pitch)
     ["D5"] = 62,
     ["D#5"] = 63
   })[pitch]
-end
-
-function get_song_data(song_name)
-  local song = ({
-    canon_rock = {
-      bpm = 64,
-      raw_tracks = {
-        "B1,0,5,0,1/2+B1,0,5,0,1/2|B1,0,5,0,1/2+B1,0,5,0,1/2",
-        "B1,0,5,0,1/2+B1,0,5,0,1/2|B1,0,5,0,1/2+B1,0,5,0,1/2"
-      }
-    }
-  })[song_name]
-
-  song.tracks = {}
-
-  for track in all(song.raw_tracks) do
-    local parsed_chords = {}
-    local chords = split(track, "|")
-
-    for c = 1, #chords do
-      local parsed_chord = {}
-      local notes = split(chords[c], "+")
-
-      for n = 1, #notes do
-        add(parsed_chord, split(notes[n]))
-      end
-
-      add(parsed_chords, parsed_chord)
-    end
-
-    add(song.tracks, parsed_chords)
-  end
-
-  return song
 end

@@ -5,15 +5,15 @@ function Game:new()
 
   obj.player = Player:new()
   obj.song = Song:new("canon_rock")
-  obj.metronome = Metronome:new(obj.song.song_data.bpm)
+  obj.metronome = Metronome:new()
 
   return obj
 end
 
 function Game:update()
-  self.metronome:update()
   self.player:update()
-  self.song:update(self.metronome.current_beat, self.metronome.frame_type, self.handle_button_press)
+  self.song:update(self.metronome, self.handle_button_press)
+  self.metronome:update()
 end
 
 function Game:handle_button_press()
