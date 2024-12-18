@@ -1,10 +1,10 @@
 Metronome = Base:new()
 
-function Metronome:new(frames_per_beat)
+function Metronome:new(bpm)
   local obj = Base.new(self)
 
   obj.current_beat = 0
-  obj.frames_per_beat = frames_per_beat
+  obj.frames_per_beat = flr(64 * 60 / bpm)
   obj.frames = 0
   obj.frame_type = ""
 

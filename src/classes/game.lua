@@ -5,7 +5,7 @@ function Game:new()
 
   obj.player = Player:new()
   obj.song = Song:new("canon_rock")
-  obj.metronome = Metronome:new(obj.song.track.frames_per_beat)
+  obj.metronome = Metronome:new(obj.song.track.bpm)
 
   return obj
 end

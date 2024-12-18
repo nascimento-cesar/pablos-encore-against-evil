@@ -78,5 +78,5 @@ function get_pitch_id(pitch)
 end
 
 function get_track(track_name)
-  return { frames_per_beat = 32 }
+  return { bpm = 64 }
 end
