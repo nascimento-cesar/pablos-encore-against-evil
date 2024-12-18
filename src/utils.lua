@@ -76,3 +76,7 @@ function get_pitch_id(pitch)
     ["D#5"] = 63
   })[pitch]
 end
+
+function get_track(track_name)
+  return { frames_per_beat = 32 }
+end

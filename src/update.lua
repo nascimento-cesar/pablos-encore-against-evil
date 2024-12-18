@@ -1,3 +1,3 @@
 function _update()
-  game.update()
+  game:update()
 end

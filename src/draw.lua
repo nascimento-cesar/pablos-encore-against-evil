@@ -13,7 +13,7 @@ end
 
 function print_button(button_icon, i, c)
   local is_button_pressed = game.player.button_states[button_icon]
-  print_outlined_text(button_icon, 38 + (i * 10), 112 + (is_button_pressed and -1 or 0), is_button_pressed and 7 or c)
+  print_outlined_text(button_icon, 38 + (i * 10), 112 + (is_button_pressed and 1 or 0), is_button_pressed and 7 or c)
 end
 
 function print_outlined_text(text, x, y, c, o_c)

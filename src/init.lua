@@ -1,4 +1,4 @@
 function _init()
   debug = ""
-  game = Game.new()
+  game = Game:new()
 end

@@ -1,6 +1,7 @@
 pico-8 cartridge // http://www.pico-8.com
 version 42
 __lua__
+#include classes/base.lua
 #include classes/game.lua
 #include classes/metronome.lua
 #include classes/player.lua

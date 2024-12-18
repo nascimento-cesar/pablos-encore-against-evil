@@ -1,23 +1,23 @@
-Player = {
-  new = function()
-    local obj = {
-      button_states = {},
-      combo = 0,
-      multiplier = 1,
-      score = 0
-    }
+Player = Base:new()
 
-    obj.score_up = function(frame_type)
-      obj.score += (frame_type == "perfect" and 20 or 10) * obj.multiplier
-      obj.combo += 1
-    end
+function Player:new()
+  local obj = Base.new(self)
 
-    obj.update = function()
-      for button_icon in all(split "❎,🅾️,⬅️,⬇️,➡️") do
-        obj.button_states[button_icon] = btn(get_button_id(button_icon))
-      end
-    end
+  obj.button_states = {}
+  obj.combo = 0
+  obj.multiplier = 1
+  obj.score = 0
 
-    return obj
+  return obj
+end
+
+function Player:update()
+  for button_icon in all(split "❎,🅾️,⬅️,⬇️,➡️") do
+    self.button_states[button_icon] = btn(get_button_id(button_icon))
   end
-}
+end
+
+function Player:score_up(frame_type)
+  self.score += (frame_type == "perfect" and 20 or 10) * self.multiplier
+  self.combo += 1
+end

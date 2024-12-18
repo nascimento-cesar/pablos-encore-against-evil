@@ -1,17 +1,17 @@
-Game = {
-  new = function()
-    local obj = {
-      metronome = Metronome.new(),
-      player = Player.new(),
-      song = Song.new()
-    }
+Game = Base:new()
 
-    obj.update = function()
-      obj.metronome.update()
-      obj.player.update()
-      obj.song.update(obj.metronome.current_beat, obj.metronome.frame_type, obj.player.score_up)
-    end
+function Game:new()
+  local obj = Base.new(self)
 
-    return obj
-  end
-}
+  obj.player = Player:new()
+  obj.song = Song:new("canon_rock")
+  obj.metronome = Metronome:new(obj.song.track.frames_per_beat)
+
+  return obj
+end
+
+function Game:update()
+  self.metronome:update()
+  self.player:update()
+  self.song:update(self.metronome.current_beat, self.metronome.frame_type, self.player.score_up)
+end
