@@ -22,12 +22,12 @@ function Song:update(button_press_callback)
         local note = track.notes[track.current_note]
 
         if note then
-          local pitch, duration_frames, instrument, volume, effect, current_frame, ticks_per_note, button = unpack(note)
+          local pitch, duration_frames, instrument, volume, effect, extra_effects, current_frame, ticks_per_note, button = unpack(note)
 
           if pitch == -1 then
-            self:play_note(i, 1, 0, 0, 1, i - 1, ticks_per_note)
+            self:play_sound(i + 10, 1, 0, 0, 1, 0, i - 1, ticks_per_note)
           else
-            self:play_note(i, pitch, instrument, volume, effect, i - 1, ticks_per_note)
+            self:play_sound(i + 10, pitch, instrument, volume, effect, extra_effects, i - 1, ticks_per_note)
           end
 
           track.current_note += 1
@@ -52,10 +52,11 @@ function Song:parse_tracks(song_name)
       local notes = split(track, "|")
 
       for n = 1, #notes do
-        local pitch, duration, instrument, volume, effect = unpack(split(notes[n]))
+        local pitch, duration, instrument, volume, effect, extra_effects = unpack(split(notes[n]))
         local duration_frames = flr(Song.frames_per_beat * parse_duration(duration))
         local ticks_per_note = flr((duration_frames * Song.ticks_per_second) / Song.frames_per_beat)
-        add(parsed_notes, { parse_pitch(pitch), duration_frames, instrument, volume, effect, current_frame, ticks_per_note, buttons[ceil(rnd(#buttons))] })
+
+        add(parsed_notes, { parse_pitch(pitch), duration_frames, instrument, volume, effect, compute_extra_effects(extra_effects), current_frame, ticks_per_note, buttons[ceil(rnd(#buttons))] })
         current_frame += duration_frames
       end
 
@@ -66,10 +67,11 @@ function Song:parse_tracks(song_name)
   return parsed_tracks
 end
 
-function Song:play_note(sfx_id, pitch, instrument, volume, effect, channel, ticks_per_note)
+function Song:play_sound(sfx_id, pitch, instrument, volume, effect, extra_effects, channel, ticks_per_note)
   local base_address = 0x3200 + 68 * sfx_id
   poke(base_address, pitch + 64 * (instrument % 4))
   poke(base_address + 1, 16 * effect + 2 * volume + flr(instrument / 4))
+  poke(base_address + 64, extra_effects)
   poke(base_address + 65, ticks_per_note)
-  sfx(sfx_id, channel or -1)
+  sfx(sfx_id, channel or -1, 0, 1)
 end
