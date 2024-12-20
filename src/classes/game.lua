@@ -3,6 +3,7 @@ Game = Base:new()
 function Game:new()
   local obj = Base.new(self)
 
+  obj.metronome = Metronome:new()
   obj.player = Player:new()
   obj.song = Song:new("canon_rock")
 
@@ -11,6 +12,7 @@ end
 
 function Game:update()
   self.song:update(self.handle_button_press)
+  self.metronome:update()
   self.player:update()
 end
 
